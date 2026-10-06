@@ -5,7 +5,8 @@
     "workspaces":  [
                        "services/svalinn-api",
                        "services/mcp-server",
-                       "apps/echo-sim"
+                       "apps/echo-sim",
+                       "services/evidence-pipeline"
                    ],
     "scripts":  {
                     "dev":  "npm run dev --workspace @claim-companion/svalinn-api",

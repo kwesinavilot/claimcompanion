@@ -1,0 +1,1 @@
+{"name":"@claim-companion/evidence-pipeline","version":"0.6.0","private":true,"type":"module","scripts":{"build":"tsc --noEmit","test":"tsx --test src/*.test.ts"},"dependencies":{"@aws-sdk/client-bedrock-runtime":"^3.0.0","@aws-sdk/client-rekognition":"^3.0.0","sharp":"^0.35.5","zod":"^3.25.0"},"devDependencies":{"@types/node":"^24.0.0","tsx":"^4.0.0","typescript":"^5.0.0"}}
