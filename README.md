@@ -2,7 +2,7 @@
 
 Voice-first car-insurance claims assistant for an Amazon hackathon. Svalinn is an original fictional insurer backend; all demo data is synthetic.
 
-Version 0.6.0 adds the mobile photo portal and asynchronous local quality pipeline to the voice simulator, core MCP loop and Svalinn backend. Local demo mode uses real tools; cloud AI and deployment remain pending. See [Phase 6 notes](docs/phase-6-notes.md) and [AWS setup](docs/aws-setup.md).
+Version 0.7.0 adds the Svalinn adjuster console and the cross-session information-request demo. Voice, photos and adjuster actions use real MCP/Svalinn state locally; cloud AI and deployment remain pending. See [Phase 7 notes](docs/phase-7-notes.md) and [AWS setup](docs/aws-setup.md).
 
 Read [the build spec](docs/codex-build-spec.md), then [the API contract](docs/svalinn-insurance-api-spec.md). [Design v3](docs/claims-concierge-design-v3.md) provides background. Spec ambiguities and build issues are tracked in [the friction log](docs/friction-log.md).
 
@@ -40,12 +40,14 @@ For the Inspector web interface, run `node_modules\.bin\mcp-inspector.cmd --web`
 
 Run `npm.cmd run smoke:core` with both services running to exercise all five tools using raw MCP JSON-RPC. This verifies safety pauses, missing-field questions, read-back readiness, explicit confirmation, write retries and upload-link generation. See [Phase 4 notes](docs/phase-4-notes.md) for raw curl and Inspector examples and the approved contract choices.
 
-New report/correction calls require `_meta["claim-companion/idempotency-key"]` in tools/call params, outside arguments. Generate a fresh key per operation and reuse it for retries. Submission uses intake_id as its insurer key. New intake requires anyone_injured:false; injury/danger pauses before any insurer call. The linked demo customer defaults to CUST_00234. The MCP service stores only upload sessions in its ignored `.local/evidence.sqlite`; all claim state stays in Svalinn. Restarting MCP preserves file-backed upload sessions. Set EVIDENCE_DB_PATH and PHOTO_PORTAL_BASE_URL in the service environment to change local settings.
+New report/correction calls require `_meta["claim-companion/idempotency-key"]` in tools/call params, outside arguments. Generate a fresh key per operation and reuse it for retries. Submission uses intake_id as its insurer key. New intake requires anyone_injured:false; injury/danger pauses before any insurer call. The linked demo customer defaults to CUST_00234. The shared evidence SQLite file contains upload sessions, batch replay receipts and temporary photo jobs; all claim state stays in Svalinn. Restarting MCP preserves file-backed upload sessions. Set EVIDENCE_DB_PATH and PHOTO_PORTAL_BASE_URL in the service environment to change local settings.
 
 Upload tokens expire after thirty minutes. Start the Phase 6 portal with `npm.cmd run dev:photos` to serve upload links on port 3003; quality checks run asynchronously and usable originals reach Svalinn. The voice UI is available; cloud deployment remains unconfigured.
 
-Git commits and remote syncing are handled by the user. The current checkpoint is version 0.6.0; see [CHANGELOG.md](CHANGELOG.md).
+Git commits and remote syncing are handled by the user. The current checkpoint is version 0.7.0; see [CHANGELOG.md](CHANGELOG.md).
 
 The application and Svalinn contract are original project work; Fastify, TypeScript, tsx, and Node types are third-party dependencies. Licensed under Apache-2.0.
 
 Start the simulator with `npm.cmd run dev:echo` while Svalinn and MCP are running, then open http://127.0.0.1:5173. Run `npm.cmd run smoke:ui` for headless Chrome verification. Start photo uploading with `npm.cmd run dev:photos`; verify with `npm.cmd run smoke:photos`. The local flow is implemented; physical phone and AWS checks remain pending.
+
+Start the adjuster console with `npm.cmd run dev:adjuster` and open http://127.0.0.1:3006. Copy a filed claim ID from the simulator, open it here, and click **Request more info**. A fresh voice conversation then reads that task from Svalinn. Verify with `npm.cmd run smoke:remembered` while Svalinn, MCP, echo-sim and the console are running.

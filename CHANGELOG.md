@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.7.0 — 2026-10-06
+
+- Add fictional Svalinn adjuster console with claim lookup, tasks, evidence and timeline.
+- Send information requests and demo stage changes through Svalinn HTTP with stable action keys and safe retries.
+- Keep insurer credentials in the local proxy and preserve oldest-task/stage behavior.
+- Add a scripted browser scenario covering lost-response replay and claim status in a fresh MCP/orchestrator process and new voice conversation.
+
+Cloud deployment and live AWS/speech acceptance remain pending. Phase 8 is not started.
+
+
 ## 0.6.0 — 2026-10-06
 
 - Add mobile photo selection/capture, labels, processing updates and retake guidance.
