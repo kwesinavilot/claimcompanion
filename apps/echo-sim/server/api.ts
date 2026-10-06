@@ -13,6 +13,11 @@ export function buildApi() {
     const send = (status: number, data: unknown) => { response.writeHead(status, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }); response.end(JSON.stringify(data)); };
     if (request.headers.origin && !['http://127.0.0.1:5173', 'http://localhost:5173'].includes(request.headers.origin)) { send(403, { error: 'This demo accepts local browser requests only.' }); return; }
     if (request.method === 'GET' && request.url === '/api/config') { send(200, { mode, configured }); return; }
+    if (request.method === 'GET' && request.url?.startsWith('/api/view?')) {
+      try { const uri = new URL(request.url, 'http://localhost').searchParams.get('uri') ?? ''; send(200, { html: await new McpBridge(process.env.MCP_SERVER_URL ?? 'http://127.0.0.1:3002/mcp').view(uri) }); }
+      catch { send(503, { error: 'The claim view is unavailable. The conversation still works.' }); }
+      return;
+    }
     if (request.method !== 'POST' || !['/api/turn', '/api/session'].includes(request.url ?? '')) { send(404, { error: 'Not found.' }); return; }
     try {
       const chunks: Buffer[] = []; let size = 0;

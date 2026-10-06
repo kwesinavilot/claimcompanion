@@ -8,7 +8,8 @@
                        "apps/echo-sim",
                        "services/evidence-pipeline",
                        "apps/photo-portal",
-                       "services/adjuster-console"
+                       "services/adjuster-console",
+                       "packages/mcp-ask-back"
                    ],
     "scripts":  {
                     "dev":  "npm run dev --workspace @claim-companion/svalinn-api",

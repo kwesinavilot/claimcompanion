@@ -14,6 +14,7 @@ export function uploadLink(store: EvidenceStore, tenant: string, claimId: string
 export function registerRequestPhotoUpload(server: McpServer, client: SvalinnClient, store: EvidenceStore, tenant: string, baseUrl: string) {
   server.registerTool('request_photo_upload', {
     description: 'Call when the customer asks how to send photos. Creates an upload link and checklist.',
+    _meta: { ui: { resourceUri: 'ui://claims/evidence-checklist' } },
     inputSchema: z.object({ claim_id: z.string().optional() }).strict(),
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: true },
   }, async ({ claim_id }, extra) => {

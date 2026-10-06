@@ -5,6 +5,7 @@ import { SvalinnClient, SvalinnError } from '../svalinn-client.js';
 export function registerGetClaimStatus(server: McpServer, client: SvalinnClient) {
   server.registerTool('get_claim_status', {
     description: 'Call when the customer asks about progress or next steps. Returns stage, who has the next move, and the next step in plain language.',
+    _meta: { ui: { resourceUri: 'ui://claims/status-timeline' } },
     inputSchema: z.object({ claim_id: z.string().optional() }).strict(),
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
   }, async ({ claim_id }) => {

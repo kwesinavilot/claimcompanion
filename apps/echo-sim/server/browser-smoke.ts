@@ -8,6 +8,7 @@ try {
   const page = await browser.newPage({ viewport: { width: 1440, height: 1100 } });
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
+  page.on('console', message => { if (message.type() === 'error') console.error(message.text()); });
   // tsx preserves names with this helper in serialized functions.
   await page.addInitScript('window.__name = (value) => value;');
   await page.addInitScript(({ report }) => {
@@ -31,18 +32,24 @@ try {
   await page.getByRole('button', { name: 'Yes, file it' }).waitFor();
   await send('Actually it was Elm Street, not Oak Street.');
   await page.getByLabel('Report details').getByText('Elm Street', { exact: true }).waitFor();
-  await page.getByRole('button', { name: 'Yes, file it' }).click();
+  const appFrame = page.frameLocator('iframe');
+  try { await appFrame.getByRole('button', { name: 'Yes, file it' }).click(); }
+  catch (error) { console.error('View diagnostic:', await appFrame.locator('body').innerText(), errors); throw error; }
   await page.getByText('Your claim is in.', { exact: true }).waitFor();
   const claimId = await page.locator('.filed-card code').innerText();
   assert.match(claimId, /^clm_/);
+  await appFrame.locator('canvas').waitFor();
+  assert.equal(await page.locator('iframe').getAttribute('sandbox'), 'allow-scripts');
   await mkdir('../../.local', { recursive: true });
   await page.screenshot({ path: '../../.local/echo-sim-desktop.png', fullPage: true });
   await page.getByRole('button', { name: /Check in later/ }).click();
   await send('How is my claim going?');
   await page.locator('.trace summary').filter({ hasText: 'get_claim_status' }).waitFor();
+  await appFrame.getByRole('button', { name: 'Expand view' }).click();
+  await page.getByRole('button', { name: 'Close expanded view' }).click();
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({ path: '../../.local/echo-sim-mobile.png', fullPage: true });
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), 'Mobile page must fit viewport');
   assert.deepEqual(errors, []);
-  console.log(JSON.stringify({ claimId, passed: ['synthetic speech event', 'consent', 'real MCP intake', 'correction', 'explicit filing', 'new-session status', 'mobile layout', 'no browser errors'] }, null, 2));
+    console.log(JSON.stringify({ claimId, passed: ['synthetic speech event', 'consent', 'real MCP intake', 'correction', 'Apps iframe confirmation', 'evidence QR code', 'scripts-only sandbox', 'status fullscreen', 'new-session status', 'mobile layout', 'no browser errors'] }, null, 2));
 } finally { await browser.close(); }

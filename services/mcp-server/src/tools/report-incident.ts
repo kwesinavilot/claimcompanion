@@ -48,6 +48,7 @@ function draftResult(fnol: Fnol) {
 export function registerReportIncident(server: McpServer, client: SvalinnClient, customerId: string) {
   server.registerTool('report_incident', {
     description: 'Call when the customer describes an accident or adds/corrects a detail, before or after filing. Returns what is still missing or that it is ready to review.',
+    _meta: { ui: { resourceUri: 'ui://claims/intake-summary' } },
     inputSchema: reportSchema, annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: true },
   }, async (input, extra) => {
     // This happens before metadata checks, lookups or writes.

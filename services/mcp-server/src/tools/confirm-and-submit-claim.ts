@@ -10,6 +10,7 @@ import { errorResult, result } from './result.js';
 export function registerConfirmAndSubmit(server: McpServer, client: SvalinnClient, store: EvidenceStore, customerId: string, tenant: string, baseUrl: string) {
   server.registerTool('confirm_and_submit_claim', {
     description: 'Call only after reading the summary back to the customer and getting an explicit yes.',
+    _meta: { ui: { resourceUri: 'ui://claims/evidence-checklist' } },
     inputSchema: z.object({ intake_id: z.string(), confirmed: z.boolean() }).strict(),
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: true },
   }, async ({ intake_id, confirmed }) => {

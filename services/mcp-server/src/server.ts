@@ -10,6 +10,7 @@ import { registerConfirmAndSubmit } from './tools/confirm-and-submit-claim.js';
 import { registerRequestPhotoUpload } from './tools/request-photo-upload.js';
 import { EvidenceStore } from './evidence-store.js';
 import { checkSafety } from './safety.js';
+import { registerViews } from './apps.js';
 
 export function buildHttpServer(config: SvalinnConfig, options: { evidencePath?: string; photoPortalUrl?: string; customerId?: string } = {}) {
   const client = new SvalinnClient(config); // Configuration only, no claim cache.
@@ -26,6 +27,7 @@ export function buildHttpServer(config: SvalinnConfig, options: { evidencePath?:
       return;
     }
     const server = new McpServer({ name: 'claim-companion', version: '0.6.0' });
+    registerViews(server);
     registerReportIncident(server, client, customerId);
     registerReviewEvidence(server, client);
     registerGetClaimStatus(server, client);

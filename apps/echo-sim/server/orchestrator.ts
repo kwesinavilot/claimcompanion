@@ -38,6 +38,9 @@ export class Orchestrator {
     // Always run before model calls, metadata processing or claim writes.
     if (checkSafety(message, false).level === 'emergency') { state.safety = false; state.stage = 'emergency'; state.reviewHash = undefined; return reply(safetyText); }
     if (/\b(covered|coverage|fault|liability|repair cost|denied|denial|legal advice|medical advice)\b/i.test(message)) return reply('An adjuster can help with that. I can help you report an incident or check a claim.');
+    if (state.intakeId && /^I need to correct a detail[.!\s]*$/i.test(message)) {
+      state.reviewHash = undefined; state.stage = 'intake'; return reply('Which detail would you like to change?');
+    }
     const isRead = /\b(status|progress|going|arrived|received|evidence|upload|photo link|send photos)\b/i.test(message);
     if (!isRead && !state.safety) {
       if (clearlySafe.test(message) || (['safety', 'emergency'].includes(state.stage) && safeAnswer.test(message))) state.safety = true;

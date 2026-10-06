@@ -1,5 +1,7 @@
 # Claim Companion
 
+Phase 8 is in progress: MCP Apps views and the portable ask-back package are implemented and tested. Tools 6–8 await contract clarification. See [Phase 8 notes](docs/phase-8-notes.md).
+
 Voice-first car-insurance claims assistant for an Amazon hackathon. Svalinn is an original fictional insurer backend; all demo data is synthetic.
 
 Version 0.7.0 adds the Svalinn adjuster console and the cross-session information-request demo. Voice, photos and adjuster actions use real MCP/Svalinn state locally; cloud AI and deployment remain pending. See [Phase 7 notes](docs/phase-7-notes.md) and [AWS setup](docs/aws-setup.md).

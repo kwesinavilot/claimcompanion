@@ -1,0 +1,12 @@
+import { build } from 'vite';
+import { fileURLToPath } from 'node:url';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+const root = fileURLToPath(new URL('./', import.meta.url));
+const output = await build({ configFile: false, root, build: { write: false, cssCodeSplit: false, rollupOptions: { input: fileURLToPath(new URL('./view.ts', import.meta.url)), output: { inlineDynamicImports: true } } } });
+if (Array.isArray(output) || !('output' in output)) throw new Error('Unexpected view build output.');
+const script = output.output.find(item => item.type === 'chunk');
+if (!script || script.type !== 'chunk') throw new Error('Missing view script.');
+const css = output.output.filter(item => item.type === 'asset' && item.fileName.endsWith('.css')).map(item => item.type === 'asset' ? String(item.source) : '').join('\n');
+const html = (await readFile(new URL('./view.html', import.meta.url), 'utf8')).replace('</head>', () => `<style>${css}</style></head>`).replace('<script type="module" src="./view.ts"></script>', () => `<script type="module">${script.code.replace(/<\/script/gi, '<\\/script')}</script>`);
+await mkdir(new URL('./dist/', import.meta.url), { recursive: true });
+await writeFile(new URL('./dist/view.html', import.meta.url), html);

@@ -6,6 +6,7 @@ import { errorResult, missingClaim, result } from './result.js';
 export function registerReviewEvidence(server: McpServer, client: SvalinnClient) {
   server.registerTool('review_evidence', {
     description: 'Call when the customer asks if photos arrived or what is still needed.',
+    _meta: { ui: { resourceUri: 'ui://claims/evidence-checklist' } },
     inputSchema: z.object({ claim_id: z.string().optional() }).strict(),
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
   }, async ({ claim_id }) => {

@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased — Phase 8 in progress
+
+- Add bundled MCP Apps intake, evidence QR and status views with a sandboxed simulator host.
+- Route view actions through existing confirmation gates; display the latest tool result.
+- Add a portable Apache-2.0 ask-back package, resource contract test and browser view checks.
+- Tools 6–8 remain pending specification clarification. See docs/phase-8-notes.md.
+
 ## 0.7.0 — 2026-10-06
 
 - Add fictional Svalinn adjuster console with claim lookup, tasks, evidence and timeline.
