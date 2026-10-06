@@ -1,17 +1,20 @@
 {
     "name":  "claim-companion",
-    "version":  "0.5.0",
+    "version":  "0.6.0",
     "private":  true,
     "workspaces":  [
                        "services/svalinn-api",
                        "services/mcp-server",
                        "apps/echo-sim",
-                       "services/evidence-pipeline"
+                       "services/evidence-pipeline",
+                       "apps/photo-portal"
                    ],
     "scripts":  {
                     "dev":  "npm run dev --workspace @claim-companion/svalinn-api",
                     "dev:echo": "npm run dev --workspace @claim-companion/echo-sim",
                     "smoke:ui": "npm run smoke:ui --workspace @claim-companion/echo-sim",
+                    "dev:photos": "npm run dev --workspace @claim-companion/photo-portal",
+                    "smoke:photos": "npm run smoke --workspace @claim-companion/photo-portal",
                     "dev:mcp":  "npm run dev --workspace @claim-companion/mcp-server",
                     "build":  "npm run build --workspaces",
                     "test":  "npm run test --workspaces",

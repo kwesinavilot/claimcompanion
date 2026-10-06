@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.6.0 — 2026-10-06
+
+- Add mobile photo selection/capture, labels, processing updates and retake guidance.
+- Accept one durable, idempotent batch per expiring token; keep credentials server-side.
+- Run image quality checks asynchronously and forward usable originals to Svalinn over HTTP.
+- Resume pending work after restart, prevent duplicate documents on worker retries, and erase finished photo bytes and expired evidence jobs.
+- Add Rekognition/Bedrock adapters with strict observations and explicit unavailable local analysis.
+- Link the simulator to the portal; add mobile Chrome smoke and persistence/quality/expiry contracts.
+- Document local, LAN-phone and AWS setup; update sharp to patched 0.35.5.
+
+This is a local Phase 6 checkpoint. AWS infrastructure/live AI and physical-phone acceptance remain pending. Phase 7 is not started.
+
+
 ## 0.5.0 — 2026-10-06
 
 - Add React voice simulator, typed fallback, speech output and real MCP inspector.

@@ -25,7 +25,7 @@ export function buildHttpServer(config: SvalinnConfig, options: { evidencePath?:
       response.end(JSON.stringify({ jsonrpc: '2.0', error: { code: -32000, message: 'Method not allowed.' }, id: null }));
       return;
     }
-    const server = new McpServer({ name: 'claim-companion', version: '0.4.0' });
+    const server = new McpServer({ name: 'claim-companion', version: '0.6.0' });
     registerReportIncident(server, client, customerId);
     registerReviewEvidence(server, client);
     registerGetClaimStatus(server, client);

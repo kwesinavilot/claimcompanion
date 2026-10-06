@@ -6,7 +6,7 @@ import type { Trace } from '../src/types.js';
 export class McpBridge {
   constructor(private endpoint: string) {}
   private async connect() {
-    const client = new Client({ name: 'claim-companion-echo-sim', version: '0.5.0' });
+    const client = new Client({ name: 'claim-companion-echo-sim', version: '0.6.0' });
     await client.connect(new StreamableHTTPClientTransport(new URL(this.endpoint)));
     return client;
   }
