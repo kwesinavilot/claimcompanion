@@ -16,3 +16,11 @@
 - 2026-10-06: API provides no task-completion endpoint or NONE nextMove value; stage changes leave tasks open and terminal no-task summaries explicitly request no action.
 - 2026-10-06: Added @fastify/multipart with approved dependency access after sandbox EACCES. Upload limit chosen as 10 MiB for this in-memory mock.
 - 2026-10-06: Live Phase 2 launch initially hit EADDRINUSE because the earlier Phase 1 process still occupied port 3001. Stopped that agent-owned session before restarting the updated service.
+- 2026-10-06: Phase 2 verified: TypeScript build and all four contract tests pass, including oversized/invalid upload rejection without partial state. Live curl smoke created a draft, promoted it twice, uploaded twice, added a note and adjuster action, then read one claim/document and the requested customer task. Service running locally on port 3001; version 0.2.0 ready for user's Git commit/sync.
+- 2026-10-06: Phase 3 has no available built-in browser tool; using SDK HTTP tests and MCP Inspector CLI for verification.
+- 2026-10-06: get_claim_status has optional claim_id but no claim-selection endpoint; asked about needs_input on omission, then used that stateless fallback while proceeding with local hosting. No cloud deployment target is configured.
+- 2026-10-06: SDK host allowlists require exact host:port values, not wildcards; derive the local port at runtime. SDK compatibility result unions require parsing with CallToolResultSchema for typed tests.
+- 2026-10-06: MCP Inspector dependency download reached registry idle timeout; retrying with longer network timeout.
+- 2026-10-06: Inspector retry succeeded. CLI tools/list and tools/call returned the real Svalinn claim and adjuster task. Inspector emits a local OAuth-storage lock warning in the restricted environment; these anonymous local checks still complete successfully and use no OAuth credentials.
+- 2026-10-06: Live Phase 3 SDK smoke measured 193 ms and 32 ms for tool calls. SDK contract test proves a new MCP process sees a task created after the first process was stopped.
+- 2026-10-06: Version 0.3.0 local checkpoint verified: both workspaces build, all six tests pass, and Inspector CLI calls succeed. Svalinn remains on port 3001 and MCP on port 3002. Git operations remain with the user; Phase 4 and cloud deployment have not started.

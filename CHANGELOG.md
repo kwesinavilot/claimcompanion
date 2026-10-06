@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0 — 2026-10-06
+
+- Add a standalone local MCP Streamable HTTP service with get_claim_status using the official SDK.
+- Read and validate Svalinn responses over HTTP without storing claim state or calling a model.
+- Preserve the optional claim_id schema and return needs_input on omission, plus safe upstream error results.
+- Add SDK contract tests across real service processes, including a full MCP restart, and a live smoke command.
+- Verify tool listing and a real claim-status call with MCP Inspector CLI; add run/Inspector instructions.
+
+Phase 4 and later remain unimplemented. This checkpoint is local; cloud deployment is not configured.
+
 ## 0.2.0 — 2026-10-06
 
 - Complete Svalinn Phase 2: FNOL drafts, corrections, promotion, claim reads, multipart document storage, notes and mock adjuster actions.
@@ -14,5 +24,3 @@
 - Seed five synthetic customers across two authenticated tenants.
 - Add JSON envelopes, request IDs, validation, tenant isolation, and sandbox rate limiting.
 - Verify TypeScript build, contract tests, and live HTTP curl requests.
-
-Phase 3 and later have not been implemented.

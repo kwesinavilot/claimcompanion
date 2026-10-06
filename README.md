@@ -2,7 +2,7 @@
 
 Voice-first car-insurance claims assistant for an Amazon hackathon. Svalinn is an original fictional insurer backend; all demo data is synthetic.
 
-Version 0.2.0 completes Phases 1–2: the standalone TypeScript/Fastify Svalinn service with customer resolution, FNOL drafts and promotion, claim reads, documents, notes and mock adjuster actions. The remaining directories are scaffolding for later phases.
+Version 0.3.0 includes the complete Svalinn backend and the local Phase 3 MCP service: get_claim_status reads the running insurer over Streamable HTTP. Other MCP tools and app directories remain scaffolding.
 
 Read [the build spec](docs/codex-build-spec.md), then [the API contract](docs/svalinn-insurance-api-spec.md). [Design v3](docs/claims-concierge-design-v3.md) provides background. Spec ambiguities and build issues are tracked in [the friction log](docs/friction-log.md).
 
@@ -25,6 +25,19 @@ With the server running, run `npm.cmd run smoke` in another terminal. This execu
 
 Every write requires an `Idempotency-Key` header; customer resolution is a read-only lookup and remains exempt. Use the same key and body when retrying an operation. JSON field order and multipart boundary/order do not affect replays. A different body with the same key for the same tenant/method/path returns 409. Uploads require one nonempty image/PDF (maximum 10 MiB), kind and optional label. See [Phase 2 contract decisions](docs/phase-2-contract-decisions.md) for response and mock-stage rules chosen with the user's delegated discretion. Safety checks and voice behavior belong to the MCP/orchestrator phases; no LLM is called by this backend.
 
-Git commits and remote syncing are handled by the user. The current checkpoint is version 0.2.0; see [CHANGELOG.md](CHANGELOG.md).
+To run MCP, configure `services/mcp-server/.env` using `.env.example`: set SVALINN_API_BASE_URL to the running Svalinn /v1 URL, SVALINN_API_KEY to the local US key, and SVALINN_TENANT_ID to TEN_001. The current workspace already has an ignored local configuration. Keep Svalinn running, then run `npm.cmd run dev:mcp` in a second terminal. MCP listens at http://127.0.0.1:3002/mcp.
+
+Run `npm.cmd run smoke:mcp` in a third terminal. It creates a glass claim through Svalinn HTTP, reads status via the SDK, adds an adjuster task, then reads the task through a new client connection. It prints the claim_id and measured call times. `npm.cmd test` also proves the changed task survives a full MCP process restart while Svalinn stays running.
+
+Verify independently through Inspector (set $claimId to the value printed by smoke:mcp):
+
+```powershell
+node_modules\.bin\mcp-inspector.cmd --cli http://127.0.0.1:3002/mcp --transport http --method tools/list
+node_modules\.bin\mcp-inspector.cmd --cli http://127.0.0.1:3002/mcp --transport http --method tools/call --tool-name get_claim_status --tool-arg "claim_id=$claimId"
+```
+
+For the Inspector web interface, run `node_modules\.bin\mcp-inspector.cmd --web` and connect using Streamable HTTP to the same /mcp URL. The agent had no built-in browser capability; verification used Inspector CLI and SDK clients. [Phase 3 notes](docs/phase-3-notes.md) describe the local-only hosting and protocol scope. Missing claim_id returns needs_input; missing claims and backend failures return safe error results. There is no MCP claim cache or LLM call.
+
+Git commits and remote syncing are handled by the user. The current checkpoint is version 0.3.0; see [CHANGELOG.md](CHANGELOG.md).
 
 The application and Svalinn contract are original project work; Fastify, TypeScript, tsx, and Node types are third-party dependencies. Licensed under Apache-2.0.
