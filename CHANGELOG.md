@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.5.0 — 2026-10-06
+
+- Add React voice simulator, typed fallback, speech output and real MCP inspector.
+- Add Bedrock Converse tool-selection adapter and explicitly labeled local demo interpreter.
+- Gate intake on safety and consent; refresh readback before host-authorized submission.
+- Preserve stable message keys for retries and support a fresh conversation with an existing claim.
+- Add orchestrator tests and headless Chrome workflow verification.
+
+Live Bedrock and physical microphone acceptance remain pending; Phase 6 is not started.
+
+
 ## 0.4.0 — 2026-10-06
 
 - Implement report_incident, review_evidence, confirm_and_submit_claim and request_photo_upload alongside get_claim_status.

@@ -2,7 +2,7 @@
 
 Voice-first car-insurance claims assistant for an Amazon hackathon. Svalinn is an original fictional insurer backend; all demo data is synthetic.
 
-Version 0.4.0 includes the complete Svalinn backend and Phase 4's core MCP loop: report, correct, review and submit a claim, generate a photo-upload link, and read claim status/evidence. The app directories remain scaffolding.
+Version 0.5.0 adds the voice simulator and orchestrator to the complete Svalinn backend and core MCP loop. Local demo mode uses real tools and a scripted interpreter; live Bedrock verification awaits AWS configuration. See [Phase 5 notes](docs/phase-5-notes.md).
 
 Read [the build spec](docs/codex-build-spec.md), then [the API contract](docs/svalinn-insurance-api-spec.md). [Design v3](docs/claims-concierge-design-v3.md) provides background. Spec ambiguities and build issues are tracked in [the friction log](docs/friction-log.md).
 
@@ -42,8 +42,10 @@ Run `npm.cmd run smoke:core` with both services running to exercise all five too
 
 New report/correction calls require `_meta["claim-companion/idempotency-key"]` in tools/call params, outside arguments. Generate a fresh key per operation and reuse it for retries. Submission uses intake_id as its insurer key. New intake requires anyone_injured:false; injury/danger pauses before any insurer call. The linked demo customer defaults to CUST_00234. The MCP service stores only upload sessions in its ignored `.local/evidence.sqlite`; all claim state stays in Svalinn. Restarting MCP preserves file-backed upload sessions. Set EVIDENCE_DB_PATH and PHOTO_PORTAL_BASE_URL in the service environment to change local settings.
 
-Upload tokens expire after thirty minutes. Link generation is available now; the photo portal and image-processing pipeline are Phase 6, so the default upload URL does not yet serve an upload page. No voice UI or cloud deployment is included in this checkpoint.
+Upload tokens expire after thirty minutes. Link generation is available now; the photo portal and image-processing pipeline are Phase 6, so the default upload URL does not yet serve an upload page. The voice UI is available; cloud deployment remains unconfigured.
 
-Git commits and remote syncing are handled by the user. The current checkpoint is version 0.4.0; see [CHANGELOG.md](CHANGELOG.md).
+Git commits and remote syncing are handled by the user. The current checkpoint is version 0.5.0; see [CHANGELOG.md](CHANGELOG.md).
 
 The application and Svalinn contract are original project work; Fastify, TypeScript, tsx, and Node types are third-party dependencies. Licensed under Apache-2.0.
+
+Start the simulator with `npm.cmd run dev:echo` while Svalinn and MCP are running, then open http://127.0.0.1:5173. Run `npm.cmd run smoke:ui` for headless Chrome verification. Photo uploading remains Phase 6.

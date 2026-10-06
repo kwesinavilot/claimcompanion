@@ -1,0 +1,15 @@
+# Phase 5: voice simulator
+
+Version 0.5.0 adds a React/Vite simulator at http://127.0.0.1:5173 and a loopback orchestrator API on port 3004. Keep Svalinn (3001) and MCP (3002) running, then run `npm.cmd run dev:echo` from the root. The current ignored echo-sim `.env` selects `ORCHESTRATOR_MODE=demo`, as authorized while AWS configuration is deferred.
+
+The visibly labeled local demo uses a deterministic interpreter instead of a model. Tool calls use the official MCP client and real Svalinn resources. Try **Use sample incident**, send it, answer **Yes** to filing consent, correct the street if desired, and say **Yes, file it** after readback. **Check in later** opens a fresh conversation referencing the same claim. Dates in this limited interpreter require an ISO UTC timestamp; it does not invent dates or missing fields.
+
+Microphone input uses browser SpeechRecognition/webkitSpeechRecognition; replies use speechSynthesis. Typed input remains available. Use fictional details. Browser speech services may process audio externally. Actual microphone permission, recognition service availability and audible output require a manual browser check.
+
+Safety scanning precedes model and MCP calls. Consent precedes draft creation. The host alone authorizes submission after an explicit affirmative response to a readback, refreshes facts from Svalinn, and asks again if facts changed. It never accepts model-selected confirmation. IDs appear in cards/inspector rather than spoken readback. Stable per-message operation IDs are reused for transport retries. Signed browser continuation tokens store only flow gates, resource handles and a review hash, expire after an hour, and become invalid after orchestrator restart. No claim store is added.
+
+For Bedrock, edit `apps/echo-sim/.env`: set `ORCHESTRATOR_MODE=bedrock`, `AWS_REGION`, `BEDROCK_ORCHESTRATOR_MODEL_ID` to an accessible tool-capable model or inference profile, and optionally `AWS_PROFILE` for the standard AWS credential chain. Keep secrets out of the repository. Restart the simulator. Model calls run only in the orchestrator, using Converse tool selection; MCP tools remain deterministic. The prompt is versioned in `apps/echo-sim/server/model.ts`. AWS configuration and live Bedrock verification are deferred; a model ID being present does not prove credentials or access work.
+
+Official references: [AWS Converse](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/bedrock-runtime/command/ConverseCommand/) and [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API).
+
+Verification: `npm.cmd run build`, `npm.cmd test`, then `npm.cmd run smoke:ui` with all three services running. Browser smoke uses installed headless Chrome (override `CHROME_PATH` if needed), synthetic recognition events and muted speech output; it exercises actual MCP/Svalinn intake, correction, submission and a fresh-session status lookup. Screenshots go to ignored `.local/`. This is automated plumbing verification, not a live microphone or Bedrock acceptance test. Phase 6 is not implemented.
