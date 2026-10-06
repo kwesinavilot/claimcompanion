@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.4.0 — 2026-10-06
+
+- Implement report_incident, review_evidence, confirm_and_submit_claim and request_photo_upload alongside get_claim_status.
+- Run deterministic injury/danger checks before insurer calls, and require an explicit safe response before intake.
+- Keep claim state in Svalinn, derive missing questions from its requirements, and route filed-claim corrections to idempotent notes.
+- Require stable report operation keys in MCP metadata; reuse promotion results and active upload links on retries.
+- Add a SQLite upload-session store with random tokens and thirty-minute expiration.
+- Add safety/token unit tests, per-tool SDK contracts, raw JSON-RPC smoke verification and Inspector checks.
+
+Photo portal, voice simulator and image processing remain for later phases.
+
 ## 0.3.0 — 2026-10-06
 
 - Add a standalone local MCP Streamable HTTP service with get_claim_status using the official SDK.

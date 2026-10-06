@@ -1,17 +1,18 @@
 ﻿{
-    "name": "claim-companion",
-    "version": "0.3.0",
-    "private": true,
-    "workspaces": [
-        "services/svalinn-api",
-        "services/mcp-server"
-    ],
-    "scripts": {
-        "dev": "npm run dev --workspace @claim-companion/svalinn-api",
-        "dev:mcp": "npm run dev --workspace @claim-companion/mcp-server",
-        "build": "npm run build --workspaces",
-        "test": "npm run test --workspaces",
-        "smoke": "npm run smoke --workspace @claim-companion/svalinn-api",
-        "smoke:mcp": "npm run smoke --workspace @claim-companion/mcp-server"
-    }
+    "name":  "claim-companion",
+    "version":  "0.4.0",
+    "private":  true,
+    "workspaces":  [
+                       "services/svalinn-api",
+                       "services/mcp-server"
+                   ],
+    "scripts":  {
+                    "dev":  "npm run dev --workspace @claim-companion/svalinn-api",
+                    "dev:mcp":  "npm run dev --workspace @claim-companion/mcp-server",
+                    "build":  "npm run build --workspaces",
+                    "test":  "npm run test --workspaces",
+                    "smoke":  "npm run smoke --workspace @claim-companion/svalinn-api",
+                    "smoke:mcp":  "npm run smoke --workspace @claim-companion/mcp-server",
+                    "smoke:core":  "npm run smoke:core --workspace @claim-companion/mcp-server"
+                }
 }
