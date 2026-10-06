@@ -1,0 +1,12 @@
+﻿{
+    "name": "claim-companion",
+    "private": true,
+    "workspaces": [
+        "services/svalinn-api"
+    ],
+    "scripts": {
+        "dev": "npm run dev --workspace @claim-companion/svalinn-api",
+        "build": "npm run build --workspace @claim-companion/svalinn-api",
+        "test": "npm run test --workspace @claim-companion/svalinn-api"
+    }
+}
