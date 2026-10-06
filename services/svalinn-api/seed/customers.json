@@ -1,7 +1,202 @@
 [
-  {"tenantId":"TEN_001","customer":{"externalCustomerId":"CUST_00234","firstName":"Jordan","lastName":"Reyes","phone":"+14155550192","email":"jordan.reyes@example.com"},"policies":[{"policyNumber":"SV-AUTO-2026-10481","status":"ACTIVE","effectiveDate":"2026-01-15","expirationDate":"2027-01-15","vehicles":[{"vehicleRegistrationNumber":"7KBX294","vin":"1HGCM82633A004352","make":"Honda","model":"Civic","modelYear":2021,"color":"Silver"}],"coverages":[{"type":"LIABILITY","limit":"100000.00","currency":"USD"},{"type":"COLLISION","deductible":"500.00","currency":"USD"}]}]},
-  {"tenantId":"TEN_001","customer":{"externalCustomerId":"CUST_00235","firstName":"Priya","lastName":"Shah","phone":"+14155550133","email":"priya.shah@example.com"},"policies":[{"policyNumber":"SV-AUTO-2026-10502","status":"ACTIVE","effectiveDate":"2026-01-15","expirationDate":"2027-01-15","vehicles":[{"vehicleRegistrationNumber":"4LMN812","vin":"SVDEMO00000000002","make":"Toyota","model":"RAV4","modelYear":2023,"color":"Blue"}],"coverages":[{"type":"LIABILITY","limit":"100000.00","currency":"USD"},{"type":"COLLISION","deductible":"500.00","currency":"USD"}]}]},
-  {"tenantId":"TEN_001","customer":{"externalCustomerId":"CUST_00236","firstName":"Sam","lastName":"Okafor","phone":"+14155550177","email":"sam.okafor@example.com"},"policies":[{"policyNumber":"SV-AUTO-2026-10519","status":"ACTIVE","effectiveDate":"2026-01-15","expirationDate":"2027-01-15","vehicles":[{"vehicleRegistrationNumber":"2XJT067","vin":"SVDEMO00000000003","make":"Ford","model":"F-150","modelYear":2019,"color":"White"}],"coverages":[{"type":"LIABILITY","limit":"100000.00","currency":"USD"},{"type":"COLLISION","deductible":"500.00","currency":"USD"}]}]},
-  {"tenantId":"TEN_002","customer":{"externalCustomerId":"CUST_01001","firstName":"Ama","lastName":"Boateng","phone":"+233245550192","email":"ama.boateng@example.com"},"policies":[{"policyNumber":"SV-GH-AUTO-2026-2201","status":"ACTIVE","effectiveDate":"2026-01-15","expirationDate":"2027-01-15","vehicles":[{"vehicleRegistrationNumber":"GR 4521-25","vin":"SVDEMO00000000004","make":"Toyota","model":"Corolla","modelYear":2020,"color":"Gray"}],"coverages":[{"type":"LIABILITY","limit":"100000.00","currency":"GHS"},{"type":"COLLISION","deductible":"500.00","currency":"GHS"}]}]},
-  {"tenantId":"TEN_002","customer":{"externalCustomerId":"CUST_01002","firstName":"Kojo","lastName":"Mensah","phone":"+233245550133","email":"kojo.mensah@example.com"},"policies":[{"policyNumber":"SV-GH-AUTO-2026-2219","status":"ACTIVE","effectiveDate":"2026-01-15","expirationDate":"2027-01-15","vehicles":[{"vehicleRegistrationNumber":"AS 1187-24","vin":"SVDEMO00000000005","make":"Hyundai","model":"Tucson","modelYear":2022,"color":"Black"}],"coverages":[{"type":"LIABILITY","limit":"100000.00","currency":"GHS"},{"type":"COLLISION","deductible":"500.00","currency":"GHS"}]}]}
+  {
+    "tenantId": "TEN_001",
+    "customer": {
+      "externalCustomerId": "CUST_00234",
+      "firstName": "Jordan",
+      "lastName": "Reyes",
+      "phone": "+14155550192",
+      "email": "jordan.reyes@example.com"
+    },
+    "policies": [
+      {
+        "policyNumber": "SV-AUTO-2026-10481",
+        "status": "ACTIVE",
+        "effectiveDate": "2026-01-15",
+        "expirationDate": "2027-01-15",
+        "vehicles": [
+          {
+            "vehicleRegistrationNumber": "7KBX294",
+            "vin": "1HGCM82633A004352",
+            "make": "Honda",
+            "model": "Civic",
+            "modelYear": 2021,
+            "color": "Silver"
+          }
+        ],
+        "coverages": [
+          {
+            "type": "LIABILITY",
+            "limit": "100000.00",
+            "currency": "USD"
+          },
+          {
+            "type": "COLLISION",
+            "deductible": "500.00",
+            "currency": "USD"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tenantId": "TEN_001",
+    "customer": {
+      "externalCustomerId": "CUST_00235",
+      "firstName": "Priya",
+      "lastName": "Shah",
+      "phone": "+14155550133",
+      "email": "priya.shah@example.com"
+    },
+    "policies": [
+      {
+        "policyNumber": "SV-AUTO-2026-10502",
+        "status": "ACTIVE",
+        "effectiveDate": "2026-01-15",
+        "expirationDate": "2027-01-15",
+        "vehicles": [
+          {
+            "vehicleRegistrationNumber": "4LMN812",
+            "vin": "SVDEMO00000000002",
+            "make": "Toyota",
+            "model": "RAV4",
+            "modelYear": 2023,
+            "color": "Blue"
+          }
+        ],
+        "coverages": [
+          {
+            "type": "LIABILITY",
+            "limit": "100000.00",
+            "currency": "USD"
+          },
+          {
+            "type": "COLLISION",
+            "deductible": "500.00",
+            "currency": "USD"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tenantId": "TEN_001",
+    "customer": {
+      "externalCustomerId": "CUST_00236",
+      "firstName": "Sam",
+      "lastName": "Okafor",
+      "phone": "+14155550177",
+      "email": "sam.okafor@example.com"
+    },
+    "policies": [
+      {
+        "policyNumber": "SV-AUTO-2026-10519",
+        "status": "ACTIVE",
+        "effectiveDate": "2026-01-15",
+        "expirationDate": "2027-01-15",
+        "vehicles": [
+          {
+            "vehicleRegistrationNumber": "2XJT067",
+            "vin": "SVDEMO00000000003",
+            "make": "Ford",
+            "model": "F-150",
+            "modelYear": 2019,
+            "color": "White"
+          }
+        ],
+        "coverages": [
+          {
+            "type": "LIABILITY",
+            "limit": "100000.00",
+            "currency": "USD"
+          },
+          {
+            "type": "COLLISION",
+            "deductible": "500.00",
+            "currency": "USD"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tenantId": "TEN_002",
+    "customer": {
+      "externalCustomerId": "CUST_01001",
+      "firstName": "Ama",
+      "lastName": "Boateng",
+      "phone": "+233245550192",
+      "email": "ama.boateng@example.com"
+    },
+    "policies": [
+      {
+        "policyNumber": "SV-GH-AUTO-2026-2201",
+        "status": "ACTIVE",
+        "effectiveDate": "2026-01-15",
+        "expirationDate": "2027-01-15",
+        "vehicles": [
+          {
+            "vehicleRegistrationNumber": "GR 4521-25",
+            "vin": "SVDEMO00000000004",
+            "make": "Toyota",
+            "model": "Corolla",
+            "modelYear": 2020,
+            "color": "Gray"
+          }
+        ],
+        "coverages": [
+          {
+            "type": "LIABILITY",
+            "limit": "100000.00",
+            "currency": "GHS"
+          },
+          {
+            "type": "COLLISION",
+            "deductible": "500.00",
+            "currency": "GHS"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tenantId": "TEN_002",
+    "customer": {
+      "externalCustomerId": "CUST_01002",
+      "firstName": "Kojo",
+      "lastName": "Mensah",
+      "phone": "+233245550133",
+      "email": "kojo.mensah@example.com"
+    },
+    "policies": [
+      {
+        "policyNumber": "SV-GH-AUTO-2026-2219",
+        "status": "ACTIVE",
+        "effectiveDate": "2026-01-15",
+        "expirationDate": "2027-01-15",
+        "vehicles": [
+          {
+            "vehicleRegistrationNumber": "AS 1187-24",
+            "vin": "SVDEMO00000000005",
+            "make": "Hyundai",
+            "model": "Tucson",
+            "modelYear": 2022,
+            "color": "Black"
+          }
+        ],
+        "coverages": [
+          {
+            "type": "LIABILITY",
+            "limit": "100000.00",
+            "currency": "GHS"
+          },
+          {
+            "type": "COLLISION",
+            "deductible": "500.00",
+            "currency": "GHS"
+          }
+        ]
+      }
+    ]
+  }
 ]

@@ -3,10 +3,19 @@ import { randomUUID } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { claimTypeRoutes } from './routes/claim-types.js';
 import { customerRoutes } from './routes/customers.js';
+import multipart from '@fastify/multipart';
+import { ApiError, ClaimsStore } from './store/claims.js';
+import { fnolRoutes } from './routes/fnols.js';
+import { claimRoutes } from './routes/claims.js';
+import { documentRoutes } from './routes/documents.js';
+import { noteRoutes } from './routes/notes.js';
+import { mockRoutes } from './routes/_mock.js';
 
 export function buildServer(keys: { us: string; gh: string }, logger = false) {
   if (!keys.us || !keys.gh || keys.us === keys.gh) throw new Error('Configure two distinct sandbox API keys.');
   const app = Fastify({ logger, genReqId: () => `req_${randomUUID()}`, ajv: { customOptions: { removeAdditional: false, coerceTypes: false } } });
+  const store = new ClaimsStore();
+  app.register(multipart, { limits: { fileSize: 10 * 1024 * 1024, files: 1, fields: 2, parts: 3 } });
   const tenants = new Map([[keys.us, 'TEN_001'], [keys.gh, 'TEN_002']]);
   const windows = new Map<string, { count: number; reset: number }>();
   app.addHook('onRequest', async (request, reply) => {
@@ -24,14 +33,20 @@ export function buildServer(keys: { us: string; gh: string }, logger = false) {
     if (window.count > 2000) return fail(429, 'RATE_LIMITED', 'Sandbox rate limit exceeded.');
   });
   app.setErrorHandler((error, request, reply) => {
+    if (error instanceof ApiError) return reply.code(error.statusCode).send({ status: 'error', error: { code: error.code, message: error.message, ...error.details }, requestId: request.id });
     const errorStatus = error instanceof Error && 'statusCode' in error ? error.statusCode : undefined;
     const status = typeof errorStatus === 'number' && errorStatus >= 400 && errorStatus < 500 ? errorStatus : 500;
     if (status === 500) request.log.error(error);
     reply.code(status).send({ status: 'error', error: { code: status === 500 ? 'INTERNAL_ERROR' : 'VALIDATION_ERROR', message: status === 500 ? 'An internal error occurred.' : 'Malformed request body.' }, requestId: request.id });
   });
-  app.setNotFoundHandler((request, reply) => reply.code(404).send({ status: 'error', error: { code: 'NOT_FOUND', message: 'Endpoint not implemented in Phase 1.' }, requestId: request.id }));
+  app.setNotFoundHandler((request, reply) => reply.code(404).send({ status: 'error', error: { code: 'NOT_FOUND', message: 'Endpoint not found.' }, requestId: request.id }));
   claimTypeRoutes(app);
   customerRoutes(app);
+  fnolRoutes(app, store);
+  claimRoutes(app, store);
+  documentRoutes(app, store);
+  noteRoutes(app, store);
+  mockRoutes(app, store);
   return app;
 }
 

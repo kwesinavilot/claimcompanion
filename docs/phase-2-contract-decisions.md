@@ -1,0 +1,14 @@
+# Phase 2 contract decisions
+
+On 2026-10-06 the user delegated the unresolved contract choices to the implementer. These rules fill gaps in the supplied spec; they do not add MCP functionality.
+
+- Every write requires `Idempotency-Key`: FNOL creation, patches, promotion, documents, notes, tasks, and stage updates. Customer resolution is a read-only POST and remains exempt. Keys are scoped by tenant, HTTP method and resource path. A replay returns the original status and data with a fresh requestId; changing the body returns 409. Failed requests do not reserve a key. Multipart fingerprints cover file bytes, filename, media type, kind and label, independent of boundary and part order.
+- Both public and `_mock` routes require the tenant's API key and tenant header. A mismatched key/header returns 403; IDs absent from the authenticated tenant return the endpoint's documented 404.
+- Every response uses the JSON envelope in API §4, including document/note/mock responses whose examples omit it. Tasks return 201 with the created task; stage changes return 200 with the current claim status.
+- GET FNOL returns the full stored draft plus fnolId, status and missingRequiredFields, excluding internal tenant metadata. A promoted draft includes claimId. Create/PATCH keep the compact §6.3 response. Nested location patches preserve omitted subfields.
+- Required incidentLocation means a nonblank description. Supplied customer, policy and vehicle must belong together; mismatched customer/policy yields CUSTOMER_NOT_FOUND, and a vehicle absent from the policy yields VEHICLE_NOT_ON_POLICY (422). Promotion rechecks policy activity. All current seed customers have one active policy.
+- Promotion of an already promoted FNOL returns the existing claim even with a fresh key. A replay with the original key returns the original result even if the claim has since advanced.
+- Customer tasks set stage INFO_REQUESTED. The oldest open task drives nextMove and nextStepSummary; otherwise stage defaults apply, using the background design's stage explanations. Every mock stage value in the contract is accepted for demo fast-forwarding. Stage changes do not close tasks: the contract supplies no task-completion endpoint. Uploads do not automatically close tasks or change stage. Task creation and stage changes append timeline events; same-stage updates do not append another event.
+- Document bytes and metadata, FNOLs, claims, notes and idempotency results live only in the Svalinn service's in-memory store. All reset on restart. Uploads accept declared image or PDF media types and enforce one nonempty file, at most 10 MiB, plus kind and optional label. This backend does no image analysis or content authenticity check.
+
+The nextMove enum has no NONE value; completed/withdrawn claims use INSURER with an explicit no-further-action summary when no tasks remain. No routes beyond the specified Svalinn contract are added.

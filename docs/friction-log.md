@@ -10,3 +10,9 @@
 - 2026-10-06: Resolve is a POST lookup, not a write; it creates no state and repeated requests return the same seed data (with fresh request IDs). No idempotency key is required for this endpoint by the API contract.
 - 2026-10-06: Phase 1 verified: TypeScript build and contract tests pass; live curl returns HTTP 200 with five claim types, Jordan by external ID, and Ama by phone/policy.
 - 2026-10-06: Version-control setup blocked: Git and gh are unavailable; existing Program Files/Git contains only etc. Git installation approval was rejected by the user. No commit, tag, remote, or sync has occurred.
+- 2026-10-06: User created and pushed the initial repository; origin is now configured. Continuing with Phase 2.
+- 2026-10-06: Phase 2 contract gaps: idempotency for writes other than create/promote, mock authentication, GET FNOL response shape, mock response shapes, and stage/task next-step rules. Proposed explicit rules to user before implementing these behaviors.
+- 2026-10-06: User delegated Phase 2 choices; selected and recorded rules in phase-2-contract-decisions.md. User will handle Git commits and syncing through their existing Git installation.
+- 2026-10-06: API provides no task-completion endpoint or NONE nextMove value; stage changes leave tasks open and terminal no-task summaries explicitly request no action.
+- 2026-10-06: Added @fastify/multipart with approved dependency access after sandbox EACCES. Upload limit chosen as 10 MiB for this in-memory mock.
+- 2026-10-06: Live Phase 2 launch initially hit EADDRINUSE because the earlier Phase 1 process still occupied port 3001. Stopped that agent-owned session before restarting the updated service.
